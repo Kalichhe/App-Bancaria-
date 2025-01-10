@@ -1,0 +1,10 @@
+Esta es una forma de hacer un case en python
+# if number in {"1", "2", "3", "4"}:
+        #     {
+        #         "1": lambda: mostrarSaldo(),
+        #         "2": lambda: hacerDeposito(),
+        #         "3": lambda: hacerRetiro(),
+        #         "4": lambda: salir(),
+        #     }[number]()
+        
+        

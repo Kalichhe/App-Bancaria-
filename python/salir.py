@@ -2,6 +2,9 @@
 
 import sys
 
+
 # Funcion para salir de la app
-def salir():
+def salir(total, nombre):
+    print(f"-> {nombre}, Muchas gracias por usar nuestros servicios, la buena")
+    print(f"-> Tu saldo actual es de ${total}", "\n")
     sys.exit()
