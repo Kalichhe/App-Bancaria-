@@ -24,7 +24,7 @@ def crearCuenta():
 
                 if usuario == usuarioJson:
                     print(
-                        "\nEl nombre de usuario o la cédula ya existen. Por favor, intenta con otros valores.\n"
+                        "\nEl nombre de usuario ya existen. Por favor, intenta con otros valores.\n"
                     )
                     usuario_no_existe = False
                     break
