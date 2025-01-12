@@ -16,10 +16,10 @@ def hacerDeposito(nombre):
                 print(
                     f"-> Hola {nombre}, estás en la sección de 'Hacer un Depósito'.\n"
                 )
-                deposito = input("-> Ingresa el monto que deseas depositar: $")
+                deposito = float(input("-> Ingresa el monto que deseas depositar: $"))
 
                 # Validar que el depósito sea un número positivo
-                if not deposito.isdecimal():
+                if not deposito.is_integer():
                     print(
                         f"-> {nombre}, solo aceptamos depósitos con valores numéricos positivos.\n"
                     )
