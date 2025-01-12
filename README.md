@@ -15,9 +15,8 @@ El sistema cuenta con una **zona de registro y inicio de sesión** para permitir
 ### Proceso de Registro:
 1. **Ingreso de datos:** El usuario debe proporcionar los siguientes datos:
    - **Usuario:** Un nombre de usuario único.
-   - **Cédula:** Un número de identificación único.
    - **Contraseña:** Una contraseña segura.
-2. **Almacenamiento en el archivo JSON:** Los datos del nuevo usuario (usuario, cédula y contraseña) se almacenan en el archivo JSON dentro de la carpeta [`data`](https://github.com/Kalichhe/App-Bancaria-/tree/main/data), creando una entrada única para cada cuenta de usuario.
+2. **Almacenamiento en el archivo JSON:** Los datos del nuevo usuario (usuario y contraseña) se almacenan en el archivo JSON dentro de la carpeta [`data`](https://github.com/Kalichhe/App-Bancaria-/tree/main/data), creando una entrada única para cada cuenta de usuario.
 
 ### Proceso de Inicio de Sesión:
 1. **Ingreso de credenciales:** El usuario deberá ingresar el **usuario (nombre de usuario)** y la **contraseña** que utilizó durante el proceso de registro.

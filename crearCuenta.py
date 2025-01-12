@@ -12,7 +12,6 @@ def crearCuenta():
         usuario_valido = True
         while usuario_valido:
             usuario = str(input("Ingresa un nombre de usuario: "))
-            cedula = int(input("Ingresa tu cédula: "))
             contrasena = str(input("Ingresa una contraseña: "))
 
             # Leer el archivo JSON para agregar más información
@@ -22,9 +21,8 @@ def crearCuenta():
             usuario_no_existe = True
             for cliente in data["clientes"]:
                 usuarioJson = cliente["usuario"]
-                cedulaJson = cliente["cedula"]
 
-                if usuario == usuarioJson or cedula == cedulaJson:
+                if usuario == usuarioJson:
                     print(
                         "\nEl nombre de usuario o la cédula ya existen. Por favor, intenta con otros valores.\n"
                     )
@@ -36,7 +34,6 @@ def crearCuenta():
 
         nuevoUsuario = {
             "usuario": usuario,
-            "cedula": cedula,
             "contrasena": contrasena,
             "saldo": 0,
         }
