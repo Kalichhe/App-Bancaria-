@@ -1,0 +1,26 @@
+Esta es una forma de hacer un case en python
+# if number in {"1", "2", "3", "4"}:
+        #     {
+        #         "1": lambda: mostrarSaldo(),
+        #         "2": lambda: hacerDeposito(),
+        #         "3": lambda: hacerRetiro(),
+        #         "4": lambda: salir(),
+        #     }[number]()
+
+
+# Crear json
+# Importamos json, porque se necesita para guarda la informacion de los usuarios
+import json
+
+# Creamos un diccionario, para poder guardar los datos ahi
+
+data = {}  # Diccionario
+
+# Ahora creamos una lista de cosas, en este caso sera un lista de clientes, la lista estara dentro del diccionario
+
+data["clientes"] = []  # Lista
+
+# Ahora, con ese nuevo comando que lo que hace es crear un nuevo json, pero para este caso, ya tendremos el json creado, debido a que cada vez que se ejecuta este comando, se crea de nuevo el archivo json y nos borra la informacion que ya tenia almacenada
+
+# with open("python/data/data.json", "w") as file:
+#     json.dump(data, file, indent=4)

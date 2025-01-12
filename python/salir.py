@@ -1,10 +1,8 @@
-# Vamos a hacer una app bancaria, que permita a los usuarios poder mostrar el saldo total, depositar, retirar y salir de la app.
+import sys  # Asegúrate de importar el módulo sys
 
-import sys
+def salir(saldo, nombre):
+    print(f"-> {nombre}, muchas gracias por usar nuestros servicios.")
+    print(f"-> Tu saldo actual es de: ${saldo}")
+    print("-> Hasta pronto, ¡que tengas un excelente día!\n")
 
-
-# Funcion para salir de la app
-def salir(total, nombre):
-    print(f"-> {nombre}, Muchas gracias por usar nuestros servicios, la buena")
-    print(f"-> Tu saldo actual es de ${total}", "\n")
-    sys.exit()
+    sys.exit()  # Sale de la aplicación de manera controlada

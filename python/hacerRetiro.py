@@ -1,23 +1,31 @@
-# Vamos a hacer una app bancaria, que permita a los usuarios poder mostrar el saldo total, depositar, retirar y salir de la app.
-
-
-# Funcion para hacer un retiro
-def hacerRetiro(total, nombre):
+# Función para hacer un retiro
+def hacerRetiro(saldo, nombre):
     while True:
-        print(f"-> Hola {nombre}, estamos en la seccion de hacer retiros")
-        if total == 0:
-            print(f"-> {nombre}, Tu saldo actual es de ${total}")
-            print("-> No tienes dinero para hacer un retiro\n")
-        else:
-            print(f"-> {nombre}, Tu saldo actual es de ${total}", "\n")
-            retiro = float(input("-> Ingresa la cantidad de dinero a retirar: $"))
-            if retiro > total:
-                print("-> No tienes dinero para hacer un retiro")
-                print(f"-> {nombre}, Tu saldo actual es de ${total}\n")
-                return total
-            elif retiro < 0:
-                print(f"-> {nombre}, Solo aceptamos retiros de numeros positivos\n")
+        print(f"-> Hola {nombre}, estás en la sección de 'Hacer Retiros'.\n")
+
+        if saldo == 0:
+            print(f"-> {nombre}, tu saldo actual es de ${saldo:.2f}.")
+            print("-> No tienes fondos disponibles para realizar un retiro.\n")
+            return saldo  # No es posible retirar si el saldo es 0
+
+        print(f"-> {nombre}, tu saldo actual es de ${saldo:.2f}.")
+
+        try:
+            retiro = float(
+                input("-> Ingresa la cantidad de dinero que deseas retirar: $")
+            )
+
+            if retiro <= 0:
+                print(f"-> {nombre}, solo aceptamos retiros de montos positivos.\n")
+            elif retiro > saldo:
+                print("-> No tienes suficiente dinero para realizar este retiro.")
+                print(f"-> {nombre}, tu saldo actual es de ${saldo:.2f}.\n")
             else:
-                total -= retiro
-                print(f"-> {nombre}, Tu saldo actual es de ${total}", "\n")
-                return total
+                saldo -= retiro
+                print(
+                    f"-> {nombre}, retiro exitoso. Tu nuevo saldo es de ${saldo:.2f}.\n"
+                )
+                return saldo
+
+        except ValueError:
+            print("-> Por favor, ingresa un valor numérico válido.\n")

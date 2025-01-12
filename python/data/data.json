@@ -1,0 +1,10 @@
+{
+    "clientes": [
+        {
+            "usuario": "Carlos",
+            "cedula": 1001154064,
+            "contrasena": "password",
+            "saldo": 0
+        }
+    ]
+}
