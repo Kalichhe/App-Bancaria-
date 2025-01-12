@@ -3,7 +3,6 @@ from mostrarSaldo import mostrarSaldo
 from hacerDeposito import hacerDeposito
 from hacerRetiro import hacerRetiro
 from salir import salir
-import json
 
 
 # Menú principal

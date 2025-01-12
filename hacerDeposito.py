@@ -5,7 +5,7 @@ import json
 def hacerDeposito(nombre):
     while True:
 
-        with open("python/data/data.json", "r") as file:
+        with open("data/data.json", "r") as file:
             data = json.load(file)
 
         for cliente in data["clientes"]:
@@ -35,6 +35,6 @@ def hacerDeposito(nombre):
                     # Con esto, modifico el saldo actual de dicho cliente
                     cliente["saldo"] = nuevo_saldo
 
-                    with open("python/data/data.json", "w") as file:
+                    with open("data/data.json", "w") as file:
                         json.dump(data, file, indent=4)
                     return

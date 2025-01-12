@@ -4,7 +4,7 @@ import json
 # Función para mostrar el saldo total
 def mostrarSaldo(nombre):
     # Leer el archivo JSON para obtener la información de los usuarios
-    with open("python/data/data.json", "r") as file:
+    with open("data/data.json", "r") as file:
         data = json.load(file)
 
     for cliente in data["clientes"]:

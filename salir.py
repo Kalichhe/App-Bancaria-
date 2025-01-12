@@ -3,7 +3,7 @@ import sys  # Asegúrate de importar el módulo sys
 
 
 def salir(nombre):
-    with open("python/data/data.json", "r") as file:
+    with open("data/data.json", "r") as file:
         data = json.load(file)
 
     for cliente in data["clientes"]:

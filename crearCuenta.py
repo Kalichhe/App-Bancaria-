@@ -15,7 +15,7 @@ def crearCuenta():
             contrasena = str(input("Ingresa una contraseña: "))
 
             # Leer el archivo JSON para agregar más información
-            with open("python/data/data.json", "r") as file:
+            with open("data/data.json", "r") as file:
                 data = json.load(file)
 
             usuario_no_existe = True
@@ -39,7 +39,7 @@ def crearCuenta():
         }
         data["clientes"].append(nuevoUsuario)
 
-        with open("python/data/data.json", "w") as file:
+        with open("data/data.json", "w") as file:
             json.dump(data, file, indent=4)
 
         print("\n¡Cuenta creada con éxito!")

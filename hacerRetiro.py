@@ -7,7 +7,7 @@ def hacerRetiro(nombre):
         # Leer el archivo JSON para obtener la información de los usuarios
         print(f"-> Hola {nombre}, estás en la sección de 'Hacer Retiros'.\n")
 
-        with open("python/data/data.json", "r") as file:
+        with open("data/data.json", "r") as file:
             data = json.load(file)
 
         for cliente in data["clientes"]:
@@ -45,7 +45,7 @@ def hacerRetiro(nombre):
                         # Con esto, modifico el saldo actual de dicho cliente
                         cliente["saldo"] = saldoJson
 
-                        with open("python/data/data.json", "w") as file:
+                        with open("data/data.json", "w") as file:
                             json.dump(data, file, indent=4)
                         return
 
