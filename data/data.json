@@ -1,0 +1,16 @@
+{
+  "clientes": [
+    {
+      "usuario": "Carlos",
+      "cedula": 1001154064,
+      "contrasena": "password",
+      "saldo": 0
+    },
+    {
+      "usuario": "Kalichhe",
+      "cedula": 123,
+      "contrasena": "123",
+      "saldo": 21.0
+    }
+  ]
+}

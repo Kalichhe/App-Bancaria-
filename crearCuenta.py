@@ -45,6 +45,6 @@ def crearCuenta():
         with open("python/data/data.json", "w") as file:
             json.dump(data, file, indent=4)
 
-        print("\n¡Cuenta creada con éxito!\n")
+        print("\n¡Cuenta creada con éxito!")
 
         inicioSesion()

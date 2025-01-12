@@ -8,8 +8,6 @@ import json
 
 # Menú principal
 def menu(usuario):
-    saldo = 0  # Saldo inicial del usuario
-
     while True:
         # Diseño del menú
         longitud_usuario = len(usuario)
@@ -29,17 +27,13 @@ def menu(usuario):
 
         # Opciones del menú
         if number == "1":
-            mostrarSaldo(saldo, usuario)  # Muestra el saldo actual
+            mostrarSaldo(usuario)  # Muestra el saldo actual
         elif number == "2":
-            saldo += hacerDeposito(
-                saldo, usuario
-            )  # Realiza un depósito y suma al saldo
+            hacerDeposito(usuario)  # Realiza un depósito y suma al saldo
         elif number == "3":
-            saldo = hacerRetiro(
-                saldo, usuario
-            )  # Realiza un retiro y actualiza el saldo
+            hacerRetiro(usuario)  # Realiza un retiro y actualiza el saldo
         elif number == "4":
-            salir(saldo, usuario)  # Sale de la aplicación
+            salir(usuario)  # Sale de la aplicación
         else:
             # Manejo de opciones inválidas
             print("-> Opción no válida. Por favor, selecciona una opción entre 1 y 4.")
