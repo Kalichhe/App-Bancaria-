@@ -1,29 +1,3 @@
 {
-    "clientes": [
-        {
-            "usuario": "Carlos",
-            "contrasena": "password",
-            "saldo": 0
-        },
-        {
-            "usuario": "Kalichhe",
-            "contrasena": "123",
-            "saldo": 21.0
-        },
-        {
-            "usuario": "Mario",
-            "contrasena": "1234",
-            "saldo": 800.0
-        },
-        {
-            "usuario": "qwe",
-            "contrasena": "123",
-            "saldo": 21.0
-        },
-        {
-            "usuario": "asd",
-            "contrasena": "qwe",
-            "saldo": 0
-        }
-    ]
+  "clientes": []
 }
