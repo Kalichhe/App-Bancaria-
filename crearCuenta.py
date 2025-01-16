@@ -1,7 +1,13 @@
 from inicioSesion import inicioSesion
+from cryptography.fernet import Fernet
 
-# Importamos json para gestionar la información de los usuarios
-import json
+# Con esto estamos llamando la collection de datos que tenemos en mongo db
+from connections.mongodb.connection import collection
+
+# Para poder hacer las incriptaciones y desencriptaciones
+key = Fernet.generate_key()
+
+fernet = Fernet(key)
 
 
 def crearCuenta():
@@ -14,15 +20,13 @@ def crearCuenta():
             usuario = str(input("Ingresa un nombre de usuario: "))
             contrasena = str(input("Ingresa una contraseña: "))
 
-            # Leer el archivo JSON para agregar más información
-            with open("data/data.json", "r") as file:
-                data = json.load(file)
+            data = collection.find()
 
             usuario_no_existe = True
-            for cliente in data["clientes"]:
-                usuarioJson = cliente["usuario"]
+            for cliente in data:
+                usuarioMongo = cliente["usuario"]
 
-                if usuario == usuarioJson:
+                if usuario == usuarioMongo:
                     print(
                         "\nEl nombre de usuario ya existen. Por favor, intenta con otros valores.\n"
                     )
@@ -34,13 +38,12 @@ def crearCuenta():
 
         nuevoUsuario = {
             "usuario": usuario,
-            "contrasena": contrasena,
+            "contrasena": fernet.encrypt(contrasena.encode()),
             "saldo": 0,
+            "key": key,
         }
-        data["clientes"].append(nuevoUsuario)
 
-        with open("data/data.json", "w") as file:
-            json.dump(data, file, indent=4)
+        user = collection.insert_one(nuevoUsuario)
 
         print("\n¡Cuenta creada con éxito!")
 

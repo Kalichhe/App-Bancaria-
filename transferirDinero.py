@@ -1,74 +1,59 @@
-# Transferir dinero
-import json
+from connections.mongodb.connection import collection
 
 
 def transferirDinero(nombre):
-    with open("data/data.json", "r") as file:
-        data = json.load(file)
+    usuarioEmisor = collection.find_one({"usuario": nombre})
+    if not usuarioEmisor:
+        print(f"-> El usuario {nombre} no existe en la base de datos.\n")
+        return
 
-    for cliente in data["clientes"]:
-        usuarioJson = cliente["usuario"]
-        saldoJson = cliente["saldo"]
+    usuario = usuarioEmisor["usuario"]
+    saldo = usuarioEmisor["saldo"]
 
-        if nombre == usuarioJson:
-            if saldoJson == 0:
-                print(f"-> {nombre}, tu saldo actual es de ${saldoJson:.2f}.")
-                print(
-                    "-> No tienes fondos disponibles para realizar una transferencia.\n"
-                )
-                return saldoJson  # No es posible transferir si el saldo es 0
+    if saldo == 0:
+        print(f"-> {nombre}, tu saldo actual es de ${saldo:.2f}.")
+        print("-> No tienes fondos disponibles para realizar una transferencia.\n")
+        return saldo  # No es posible transferir si el saldo es 0
 
-            print(f"-> {nombre}, tu saldo actual es de ${saldoJson:.2f}.")
+    print(f"-> {usuario}, tu saldo actual es de ${saldo:.2f}.")
 
-            while True:
-                try:
-                    usuarioDestinatario = str(
-                        input("Ingresa el usuario al que quieres enviar el dinero: ")
-                    )
-                    for clienteDesti in data["clientes"]:
-                        usuarioJsonDesti = clienteDesti["usuario"]
+    usuarioReceptor = list(collection.find())  # Convertimos el cursor en una lista para reusarlo
+    while True:
+        try:
+            nombreUsuario = input("Ingresa el usuario al que quieres enviar el dinero: ").strip()
 
-                        if usuarioJsonDesti == nombre:
-                            print("No puedes enviarte plata a ti mismo!\n")
-                            break
-                        elif usuarioDestinatario == usuarioJsonDesti:
+            if nombre == nombreUsuario:
+                print("No puedes enviarte dinero a ti mismo!\n")
+                continue
 
-                            cantidadDinero = int(
-                                input("Ingresa la cantidad de dinero a enviar: ")
-                            )
-                            if cantidadDinero <= 0:
-                                print(
-                                    f"-> {nombre}, solo aceptamos transferencias de montos positivos.\n"
-                                )
-                                break
-                            elif cantidadDinero > saldoJson:
-                                print(
-                                    "-> No tienes suficiente dinero para realizar esta transferencia."
-                                )
-                                print(
-                                    f"-> {nombre}, tu saldo actual es de ${saldoJson:.2f}.\n"
-                                )
-                                break
-                            else:
-                                saldoJson -= cantidadDinero
-                                print(
-                                    f"-> {nombre}, transferencia exitosa. Tu nuevo saldo es de ${saldoJson:.2f}.\n"
-                                )
+            clienteDestino = next(
+                (cliente for cliente in usuarioReceptor if cliente["usuario"] == nombreUsuario), None
+            )
 
-                                # Con esto, modifico el saldo actual de dicho cliente
-                                cliente["saldo"] = saldoJson
+            if not clienteDestino:
+                print("Usuario destinatario no existe. Intenta con otro usuario.\n")
+                continue
 
-                                # Con esto enviamos el dinero al destinatario
-                                clienteDesti["saldo"] += cantidadDinero
+            cantidadDinero = float(input("Ingresa la cantidad de dinero a enviar: "))
+            if cantidadDinero <= 0:
+                print(f"-> {nombre}, solo aceptamos transferencias de montos positivos.\n")
+                continue
 
-                                with open("data/data.json", "w") as file:
-                                    json.dump(data, file, indent=4)
-                                return
+            if cantidadDinero > saldo:
+                print("-> No tienes suficiente dinero para realizar esta transferencia.")
+                print(f"-> {nombre}, tu saldo actual es de ${saldo:.2f}.\n")
+                continue
 
-                    if usuarioDestinatario != usuarioJsonDesti:
-                        print(
-                            "Usuario destinatario, ¡no existe! Intenta con otro usuario.\n"
-                        )
+            # Actualizar el saldo del emisor
+            saldoEmisor = saldo - cantidadDinero
+            collection.update_one({"usuario": usuario}, {"$set": {"saldo": saldoEmisor}})
 
-                except ValueError:
-                    print("-> Por favor, ingresa un valor numérico válido.\n")
+            # Actualizar el saldo del receptor
+            saldoReceptor = clienteDestino["saldo"] + cantidadDinero
+            collection.update_one({"usuario": nombreUsuario}, {"$set": {"saldo": saldoReceptor}})
+
+            print(f"-> {nombre}, transferencia exitosa. Tu nuevo saldo es de ${saldoEmisor:.2f}.\n")
+            return
+
+        except ValueError:
+            print("-> Por favor, ingresa un valor numérico válido.\n")

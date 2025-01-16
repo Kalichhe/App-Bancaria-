@@ -1,14 +1,14 @@
-import json
+# Con esto estamos llamando la collection de datos que tenemos en mongo db
+from connections.mongodb.connection import collection
 
 
 # Función para hacer un depósito
 def hacerDeposito(nombre):
     while True:
 
-        with open("data/data.json", "r") as file:
-            data = json.load(file)
+        data = collection.find()
 
-        for cliente in data["clientes"]:
+        for cliente in data:
             usuario = cliente["usuario"]
             saldoJson = cliente["saldo"]
 
@@ -33,8 +33,7 @@ def hacerDeposito(nombre):
                     print(f"-> Tu nuevo saldo es de ${nuevo_saldo:.2f}.\n")
 
                     # Con esto, modifico el saldo actual de dicho cliente
-                    cliente["saldo"] = nuevo_saldo
-
-                    with open("data/data.json", "w") as file:
-                        json.dump(data, file, indent=4)
+                    query_filter = {"usuario": usuario}
+                    update_operation = {"$set": {"saldo":nuevo_saldo}}
+                    user = collection.update_one(query_filter,update_operation)
                     return

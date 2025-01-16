@@ -1,5 +1,9 @@
 from menu import menu
-import json
+from cryptography.fernet import Fernet
+
+
+# Con esto estamos llamando la collection de datos que tenemos en mongo db
+from connections.mongodb.connection import collection
 
 
 def inicioSesion():
@@ -10,20 +14,21 @@ def inicioSesion():
     )
 
     while True:
-        # Leer el archivo JSON para obtener la información de los usuarios
-        with open("data/data.json", "r") as file:
-            data = json.load(file)
+
+        data = collection.find()
 
         usuario = str(input("\n-> Ingresa tu usuario: "))
         contrasena = str(input("-> Ingresa tu contraseña: "))
 
         # Verificar credenciales
         usuario_encontrado = False
-        for cliente in data["clientes"]:
-            usuarioJson = cliente["usuario"]
-            contrasenaJson = cliente["contrasena"]
+        for cliente in data:
+            usuarioMongo = cliente["usuario"]
+            contrasenaMongo = cliente["contrasena"]
+            key = cliente["key"]
+            fernet = Fernet(key)
 
-            if usuario == usuarioJson and contrasena == contrasenaJson:
+            if usuario == usuarioMongo and contrasena == fernet.decrypt(contrasenaMongo).decode():
                 usuario_encontrado = True
                 print(
                     f"\n-> Bienvenido/a, {usuario}! Accediendo al menú principal...\n"

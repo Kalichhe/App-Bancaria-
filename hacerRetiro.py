@@ -1,4 +1,5 @@
-import json
+# Con esto estamos llamando la collection de datos que tenemos en mongo db
+from connections.mongodb.connection import collection
 
 
 # Función para hacer un retiro
@@ -7,20 +8,18 @@ def hacerRetiro(nombre):
         # Leer el archivo JSON para obtener la información de los usuarios
         print(f"-> Hola {nombre}, estás en la sección de 'Hacer Retiros'.\n")
 
-        with open("data/data.json", "r") as file:
-            data = json.load(file)
+        data = collection.find()
+        for cliente in data:
+            usuario = cliente["usuario"]
+            saldo = cliente["saldo"]
 
-        for cliente in data["clientes"]:
-            usuarioJson = cliente["usuario"]
-            saldoJson = cliente["saldo"]
-
-            if nombre == usuarioJson:
-                if saldoJson == 0:
-                    print(f"-> {nombre}, tu saldo actual es de ${saldoJson:.2f}.")
+            if nombre == usuario:
+                if saldo == 0:
+                    print(f"-> {nombre}, tu saldo actual es de ${saldo:.2f}.")
                     print("-> No tienes fondos disponibles para realizar un retiro.\n")
-                    return saldoJson  # No es posible retirar si el saldo es 0
+                    return saldo  # No es posible retirar si el saldo es 0
 
-                print(f"-> {nombre}, tu saldo actual es de ${saldoJson:.2f}.")
+                print(f"-> {nombre}, tu saldo actual es de ${saldo:.2f}.")
 
                 try:
                     retiro = float(
@@ -31,22 +30,21 @@ def hacerRetiro(nombre):
                         print(
                             f"-> {nombre}, solo aceptamos retiros de montos positivos.\n"
                         )
-                    elif retiro > saldoJson:
+                    elif retiro > saldo:
                         print(
                             "-> No tienes suficiente dinero para realizar este retiro."
                         )
-                        print(f"-> {nombre}, tu saldo actual es de ${saldoJson:.2f}.\n")
+                        print(f"-> {nombre}, tu saldo actual es de ${saldo:.2f}.\n")
                     else:
-                        saldoJson -= retiro
+                        saldo -= retiro
                         print(
-                            f"-> {nombre}, retiro exitoso. Tu nuevo saldo es de ${saldoJson:.2f}.\n"
+                            f"-> {nombre}, retiro exitoso. Tu nuevo saldo es de ${saldo:.2f}.\n"
                         )
 
                         # Con esto, modifico el saldo actual de dicho cliente
-                        cliente["saldo"] = saldoJson
-
-                        with open("data/data.json", "w") as file:
-                            json.dump(data, file, indent=4)
+                        query_filter = {"usuario": usuario}
+                        update_operation = {"$set": {"saldo":saldo}}
+                        user = collection.update_one(query_filter,update_operation)
                         return
 
                 except ValueError:

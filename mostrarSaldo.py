@@ -1,13 +1,13 @@
-import json
+# Con esto estamos llamando la collection de datos que tenemos en mongo db
+from connections.mongodb.connection import collection
 
 
 # Función para mostrar el saldo total
 def mostrarSaldo(nombre):
-    # Leer el archivo JSON para obtener la información de los usuarios
-    with open("data/data.json", "r") as file:
-        data = json.load(file)
 
-    for cliente in data["clientes"]:
+    data = collection.find()
+
+    for cliente in data:
         usuarioJson = cliente["usuario"]
         saldoJson = cliente["saldo"]
 
