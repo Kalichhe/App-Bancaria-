@@ -6,7 +6,7 @@ def transferirDinero(nombre):
     if not usuarioEmisor:
         print(f"-> El usuario {nombre} no existe en la base de datos.\n")
         return
-
+ 
     usuario = usuarioEmisor["usuario"]
     saldo = usuarioEmisor["saldo"]
 

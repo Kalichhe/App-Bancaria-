@@ -7,7 +7,7 @@ def main():
     print("Bienvenido/a a nuestro sistema bancario Kalichhe\n")
 
     while True:
-        try:
+        try:   
             print("Selecciona una opción:")
             print("     1) Iniciar sesión")
             print("     2) Crear una cuenta")
